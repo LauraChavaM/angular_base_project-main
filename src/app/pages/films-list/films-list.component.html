@@ -1,1 +1,7 @@
-<p>films-list works!</p>
+<div *ngIf="loading">Cargando películas...</div>
+<ul *ngIf="!loading">
+  <li *ngFor="let film of films">
+    {{ film.title }} ({{ film.release_date }})
+  </li>
+  <li *ngIf="films.length === 0">No hay películas.</li>
+</ul>

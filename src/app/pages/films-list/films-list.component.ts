@@ -1,12 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-films-list',
-  imports: [],
-  templateUrl: './films-list.component.html',
-  styleUrl: './films-list.component.scss'
+  templateUrl: './films-list.component.html'
 })
 export class FilmsListComponent {
-
-  
-} 
+  @Input() films: any[] = [];
+  @Input() loading: boolean = false;
+}

@@ -1,17 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CommonModule } from '@angular/common';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class SwapiService {
   private apiUrl = 'https://swapi.dev/api';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getPeople(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/people`);
+    return this.http.get<any>(`${this.apiUrl}/people/`);
+  }
+
+  getFilmByUrl(url: string): Observable<any> {
+    return this.http.get<any>(url);
   }
 }

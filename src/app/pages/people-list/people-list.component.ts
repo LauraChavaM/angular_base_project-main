@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SwapiService } from '../../services/swapi.service';
+import { forkJoin } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-people-list',
@@ -14,8 +16,8 @@ export class PeopleListComponent implements OnInit {
   constructor(private swapi: SwapiService) {}
 
   ngOnInit() {
-    this.swapi.getAllPeople().subscribe(data => {
-      this.people = data;
+    this.swapi.getPeople().subscribe((data: any) => {
+      this.people = data.results;
     });
   }
 
@@ -23,10 +25,21 @@ export class PeopleListComponent implements OnInit {
     this.selectedPerson = person;
     this.loadingFilms = true;
     this.films = [];
-    this.swapi.getFilms(person.films).subscribe(films => {
-      this.films = films;
+    if (person.films && person.films.length > 0) {
+      forkJoin(person.films.map((url: string) => this.swapi.getFilmByUrl(url))).subscribe(
+        (films) => {
+          this.films = films as any[];
+          this.loadingFilms = false;
+        },
+        () => {
+          this.films = [];
+          this.loadingFilms = false;
+        }
+      );
+    } else {
+      this.films = [];
       this.loadingFilms = false;
-    });
+    }
   }
 
   closeDetail() {
