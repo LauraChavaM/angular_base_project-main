@@ -1,13 +1,19 @@
 import { Routes } from '@angular/router';
+import { PeopleListComponent } from './pages/people-list/people-list.component';
+import { FilmsListComponent } from './pages/films-list/films-list.component';
 
 export const routes: Routes = [
-    {
-        path: '/people',
-        //component: () => import('./pages/people-list/people-list.component').then(m => m.PeopleListComponent)
-    }
-    , {
-        path: '/films',
-        //component: () => import('./pages/films-list/films-list.component').then(m => m.FilmsListComponent)
-    }  
-
+  {
+    path: 'people',
+    component: PeopleListComponent
+  },
+  {
+    path: 'films',
+    component: FilmsListComponent
+  },
+  {
+    path: '',
+    redirectTo: 'people',
+    pathMatch: 'full'
+  }
 ];

@@ -1,24 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { SwapiService } from './services/swapi.service';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
-@Component({
-  selector: 'app-root',
-  template: `
-        <ul>
-          <li *ngFor="let person of people">{{ person.name }}</li>
-        </ul>
-      `,
+import { AppComponent } from './app.component';
+import { PeopleListComponent } from './pages/people-list/people-list.component';
+import { FilmsListComponent } from './pages/films-list/films-list.component';
+import { routes } from './app.routes';
+
+@NgModule({
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    RouterModule.forRoot(routes),
+    AppComponent,
+    PeopleListComponent,
+    FilmsListComponent
+  ],
+  providers: [],
 })
-export class AppComponent implements OnInit {
-  people: any[] = [];
-
-  constructor(private swapiService: SwapiService) {}
-
-  ngOnInit(): void {
-    this.swapiService.getPeople().subscribe((data) => {
-      this.people = data.results;
-    });
-  }
-}
+export class AppModule { }
